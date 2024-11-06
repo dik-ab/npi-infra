@@ -24,3 +24,9 @@ module "security_group" {
   vpc_id               = module.network.vpc_id
   allowed_cidr_blocks  = ["0.0.0.0/0"]
 }
+
+module "ecr" {
+  source               = "../modules/ecr"
+  project_name         = var.project_name
+  environment          = var.environment
+}
