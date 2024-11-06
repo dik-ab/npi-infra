@@ -1,0 +1,33 @@
+# Terraform状態ファイル
+*.tfstate
+*.tfstate.*
+
+# Terraformのキャッシュとプラグイン
+.terraform/
+.terraform.lock.hcl
+
+# 秘密情報や環境変数のファイル
+*.tfvars
+*.tfvars.json
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# 計画ファイル
+*.tfplan
+
+# パスワードやSSHキーなど
+crash.log
+*.log
+
+# バックアップファイル
+*.backup
+
+# エディタやOS固有の一時ファイル
+.DS_Store
+*.swp
+*.bak
+*.tmp
+.idea/
+.vscode/
