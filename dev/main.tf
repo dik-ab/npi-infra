@@ -53,3 +53,14 @@ module "aurora" {
   aurora_security_group_id = module.security_group.aurora_sg_id
   instance_count           = "1"
 }
+
+module "secrets" {
+  source                = "../modules/secrets"
+  project_name          = var.project_name
+  environment           = var.environment
+  db_username           = var.db_username
+  db_password           = var.db_password
+  db_port               = var.db_port
+  db_host               = module.aurora.aurora_cluster_endpoint
+  db_name               = var.db_name
+}
