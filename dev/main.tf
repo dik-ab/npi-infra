@@ -41,3 +41,14 @@ module "ecs" {
   security_group_ids   = [module.security_group.ecs_sg_id]
   target_group_arn     = module.alb.target_group_arn
 }
+
+module "aurora" {
+  source                = "../modules/aurora"
+  project_name          = var.project_name
+  environment           = var.environment
+  db_username           = var.db_username
+  db_password           = var.db_password
+  db_subnet_group_name  = module.network.db_subnet_group_name
+  ecs_security_group_id = module.security_group.ecs_sg_id
+  aurora_security_group_id = module.security_group.aurora_sg_id
+}
