@@ -28,6 +28,15 @@ resource "aws_subnet" "private" {
   }
 }
 
+resource "aws_db_subnet_group" "aurora_subnet_group" {
+  name       = "${var.project_name}-${var.environment}-aurora-subnet-group"
+  subnet_ids = aws_subnet.private[*].id
+
+  tags = {
+    Name = "${var.project_name}-${var.environment}-aurora-subnet-group"
+  }
+}
+
 resource "aws_internet_gateway" "main" {
   vpc_id = aws_vpc.main.id
   tags = {
