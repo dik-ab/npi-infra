@@ -51,4 +51,5 @@ module "aurora" {
   db_subnet_group_name  = module.network.db_subnet_group_name
   ecs_security_group_id = module.security_group.ecs_sg_id
   aurora_security_group_id = module.security_group.aurora_sg_id
+  instance_count           = "1"
 }

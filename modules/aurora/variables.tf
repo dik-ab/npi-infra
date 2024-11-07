@@ -3,6 +3,10 @@ variable "ecs_security_group_id" {
   description = "Security group ID for ECS to access Aurora"
 }
 
+variable "instance_count" {
+  type        = string
+}
+
 variable "db_username" {
   type        = string
   description = "Master username for the Aurora cluster"
