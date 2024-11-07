@@ -1,6 +1,7 @@
 resource "aws_rds_cluster" "aurora_cluster" {
   cluster_identifier      = "${var.project_name}-${var.environment}-aurora-cluster"
   engine                  = "aurora-postgresql"
+  engine_version          = 15.4
   engine_mode             = "provisioned"
   master_username         = var.db_username
   master_password         = var.db_password
@@ -11,7 +12,7 @@ resource "aws_rds_cluster" "aurora_cluster" {
     min_capacity = 2
     max_capacity = 8
   }
-  
+
   lifecycle {
     prevent_destroy = false
   }
