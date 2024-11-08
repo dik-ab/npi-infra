@@ -27,18 +27,18 @@ variable "availability_zones" {
 }
 
 variable "db_username" {
-  type        = string
+  type = string
 }
 
 variable "db_password" {
-  type        = string
-  sensitive   = true
+  type      = string
+  sensitive = true
 }
 
 variable "db_port" {
-  type        = number
+  type = number
 }
 
 variable "db_name" {
-  type        = string
+  type = string
 }
