@@ -13,6 +13,16 @@ output "aurora_cluster_id" {
   description = "The ID of the Aurora cluster"
 }
 
+output "aurora_cluster_arn" {
+  value       = aws_rds_cluster.aurora_cluster.arn
+  description = "The ARN of the Aurora cluster"
+}
+
+output "aurora_cluster_instance_arns" {
+  value       = [for instance in aws_rds_cluster_instance.aurora_instance : instance.arn]
+  description = "The ARNs of the Aurora cluster instances"
+}
+
 output "aurora_db_username" {
   value       = var.db_username
   description = "The username for the Aurora database"

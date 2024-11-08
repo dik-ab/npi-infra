@@ -64,3 +64,12 @@ module "secrets" {
   db_host               = module.aurora.aurora_cluster_endpoint
   db_name               = var.db_name
 }
+
+module "iam" {
+  source               = "../modules/iam"
+  project_name         = var.project_name
+  environment          = var.environment
+  aurora_cluster_arn   = module.aurora.aurora_cluster_arn
+  aurora_instance_arns  = module.aurora.aurora_cluster_instance_arns
+  secret_arn           = module.secrets.db_credentials_arn
+}
