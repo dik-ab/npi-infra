@@ -8,6 +8,14 @@ variable "environment" {
   type        = string
 }
 
+variable "ecs_sg_id" {
+  type        = string
+}
+
+variable "aws_region" {
+  type        = string
+}
+
 variable "vpc_cidr" {
   type = string
 }

@@ -89,9 +89,36 @@ resource "aws_iam_policy" "db_access_policy" {
   })
 }
 
+resource "aws_iam_policy" "ses_access_policy" {
+  name        = "${var.environment}-${var.project_name}-SESAccessPolicy"
+  description = "Policy for ECS tasks to access Amazon SES for sending emails"
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect = "Allow",
+        Action = [
+          "ses:SendEmail",
+          "ses:SendRawEmail"
+        ],
+        Resource = "*"
+      }
+    ]
+  })
+
+  tags = {
+    Name = "${var.environment}-${var.project_name}-ses-access-policy"
+  }
+}
+
 resource "aws_iam_role_policy_attachment" "ecs_task_db_policy_attachment" {
   role       = aws_iam_role.ecs_task_role.name
   policy_arn = aws_iam_policy.db_access_policy.arn
+}
+
+resource "aws_iam_role_policy_attachment" "ecs_task_ses_policy_attachment" {
+  role       = aws_iam_role.ecs_task_role.name
+  policy_arn = aws_iam_policy.ses_access_policy.arn
 }
 
 resource "aws_iam_role_policy_attachment" "ecs_task_policy_attachment" {
