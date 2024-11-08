@@ -2,10 +2,12 @@ module "network" {
   source              = "../modules/network"
   project_name        = var.project_name
   environment         = var.environment
+  aws_region          = var.aws_region
   vpc_cidr            = var.vpc_cidr
   public_subnets_cidrs = var.public_subnets_cidrs
   private_subnets_cidrs = var.private_subnets_cidrs
   availability_zones  = var.availability_zones
+  ecs_sg_id           = module.security_group.ecs_sg_id
 }
 
 module "alb" {
