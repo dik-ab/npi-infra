@@ -57,21 +57,19 @@ resource "aws_internet_gateway" "main" {
 }
 
 resource "aws_eip" "nat" {
-  count = 2
 
   vpc = true
 
   tags = {
-    Name = "${var.environment}-nat-eip-${count.index + 1}"
+    Name = "${var.environment}-nat-eip"
   }
 }
 
 resource "aws_nat_gateway" "main" {
-  count        = length(var.availability_zones)
-  allocation_id = aws_eip.nat[count.index].id
-  subnet_id     = element(aws_subnet.public[*].id, count.index)
+  allocation_id = aws_eip.nat.id
+  subnet_id     = aws_subnet.public[0].id
   tags = {
-    Name = "${var.project_name}-${var.environment}-nat-gateway-${count.index}"
+    Name = "${var.project_name}-${var.environment}-nat-gateway"
   }
 }
 
@@ -97,7 +95,7 @@ resource "aws_route" "private_internet_access" {
   count                  = 2 
   route_table_id         = element(aws_route_table.private[*].id, count.index)
   destination_cidr_block = "0.0.0.0/0"
-  nat_gateway_id         = aws_nat_gateway.main[count.index].id
+  nat_gateway_id         = aws_nat_gateway.main.id
 }
 
 resource "aws_route_table_association" "public" {
