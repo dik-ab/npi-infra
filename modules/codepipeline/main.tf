@@ -18,8 +18,8 @@ resource "aws_codepipeline" "backend_pipeline" {
     action {
       name             = "Source"
       category         = "Source"
+      provider         = "CodeStarSourceConnection"
       owner            = "ThirdParty"
-      provider         = "GitHub"
       version          = "1"
       output_artifacts = ["source_output"]
       configuration = {
