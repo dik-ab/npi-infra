@@ -75,3 +75,39 @@ module "iam" {
   aurora_instance_arns = module.aurora.aurora_cluster_instance_arns
   secret_arn           = module.secrets.db_credentials_arn
 }
+
+module "artifact_bucket" {
+  source               = "../modules/s3/artifact_bucket"
+  project_name = var.project_name
+  environment = var.environment
+}
+
+module "codepipeline" {
+  source               = "../modules/codepipeline" 
+  project_name         = var.project_name
+  environment          = var.environment
+  github_oauth_token   = var.oauth_token
+  github_repo          = var.github_repo
+  github_owner         = var.github_owner
+  role_arn = module.codepipeline_role.pipeline_role_arn
+  artifact_bucket_name = module.s3_artifact_bucket.artifact_bucket_name
+}
+
+module "codepipeline_role" {
+  source = "../modules/iam/codepipeline_role"
+  project_name = var.project_name
+  environment = var.environment
+}
+
+resource "aws_codebuild_project" "backend_build" {
+  name          = "${var.project_name}-${var.environment}-build"
+  service_role  = module.codebuild_role.codebuild_service_role_arn
+}
+
+module "codebuild_role" {
+  source              = "../iam/codebuild_role"
+  project_name        = var.project_name
+  environment         = var.environment
+  artifact_bucket_name = module.s3_artifact_bucket.artifact_bucket_name
+}
+
