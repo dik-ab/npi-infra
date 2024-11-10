@@ -111,3 +111,20 @@ module "codebuild_role" {
   artifact_bucket_name = module.s3_artifact_bucket.artifact_bucket_name
 }
 
+module "codedeploy" {
+  source                    = "../modules/codedeploy"
+  project_name              = var.project_name
+  environment               = var.environment
+  codedeploy_service_role_arn = module.iam_codedeploy_role.codedeploy_service_role_arn
+  ecs_cluster_name          = module.ecs.cluster_name
+  ecs_service_name          = module.ecs.service_name
+  primary_target_group_name = module.alb.target_group_name
+  listener_arn              = module.alb.listener_arn
+}
+
+module "codedeploy_role" {
+  source       = "../modules/iam/codedeploy_role"
+  project_name = var.project_name
+  environment  = var.environment
+  artifact_bucket_name = module.artifact_bucket.artifact_bucket_name
+}
