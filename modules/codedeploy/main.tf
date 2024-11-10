@@ -10,7 +10,7 @@ resource "aws_codedeploy_deployment_group" "django_deployment_group" {
 
   deployment_style {
     deployment_type = "IN_PLACE"
-    deployment_option = "WITHOUT_TRAFIC_CONTROL"
+    deployment_option = "WITHOUT_TRAFFIC_CONTROL"
   }
 
   ecs_service {

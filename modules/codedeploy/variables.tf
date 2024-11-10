@@ -1,3 +1,13 @@
+variable "project_name" {
+  description = "Name of the project"
+  type        = string
+}
+
+variable "environment" {
+  description = "Deployment environment (e.g., dev, staging, prod)"
+  type        = string
+}
+
 variable "codedeploy_service_role_arn" {
   description = "The ARN of the IAM role for CodeDeploy"
   type        = string

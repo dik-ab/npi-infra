@@ -43,18 +43,14 @@ variable "db_name" {
   type = string
 }
 
-variable "auth_token" {
-  type  = string
-}
-
 variable "github_repo" {
-  type  = string
+  type = string
 }
 
 variable "github_branch" {
-  type  = string
+  type = string
 }
 
 variable "github_owner" {
-  type  = string
+  type = string
 }

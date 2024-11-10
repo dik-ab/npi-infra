@@ -29,18 +29,22 @@ variable "github_branch" {
   default     = "main"
 }
 
-variable "github_oauth_token" {
-  description = "GitHub OAuth token for accessing the repository"
-  type        = string
-  sensitive   = true
-}
-
 variable "role_arn" {
   description = "The ARN of the IAM role for CodePipeline"
   type        = string
 }
 
-variable "artifact_bucket_name" {
-  description = "S3 bucket name for CodePipeline artifacts"
+variable "codebuild_project_name" {
+  description = "The Name of the CodeBuild project name"
+  type        = string
+}
+
+variable "codedeploy_app_name" {
+  description  = "The Name of the CodeDeploy application name"
+  type         = string
+}
+
+variable "codedeploy_deployment_group_name" {
+  description = "The Name of the CodeDeploy deployment group name"
   type        = string
 }

@@ -1,6 +1,11 @@
+resource "aws_codestarconnections_connection" "github_connection" {
+  name          = "${var.project_name}-${var.environment}-github-connection"
+  provider_type = "GitHub"
+}
+
 resource "aws_codepipeline" "backend_pipeline" {
   name     = "${var.project_name}-${var.environment}-pipeline"
-  role_arn = role_arn = var.role_arn
+  role_arn = var.role_arn
 
   artifact_store {
     type     = "S3"
@@ -18,10 +23,9 @@ resource "aws_codepipeline" "backend_pipeline" {
       version          = "1"
       output_artifacts = ["source_output"]
       configuration = {
-        Owner      = var.github_owner
-        Repo       = var.github_repo
-        Branch     = var.github_branch
-        OAuthToken = var.github_oauth_token
+        ConnectionArn = aws_codestarconnections_connection.github_connection.arn
+        FullRepositoryId = "${var.github_owner}/${var.github_repo}"
+        BranchName    = var.github_branch
       }
     }
   }
@@ -38,7 +42,7 @@ resource "aws_codepipeline" "backend_pipeline" {
       output_artifacts = ["build_output"]
       version          = "1"
       configuration = {
-        ProjectName = aws_codebuild_project.backend_build.name
+        ProjectName = var.codebuild_project_name
       }
     }
   }
@@ -54,8 +58,8 @@ resource "aws_codepipeline" "backend_pipeline" {
       input_artifacts = ["build_output"]
       version         = "1"
       configuration = {
-        ApplicationName     = aws_codedeploy_application.backend_app.name
-        DeploymentGroupName = aws_codedeploy_deployment_group.backend_deployment_group.name
+        ApplicationName     = var.codedeploy_app_name
+        DeploymentGroupName = var.codedeploy_deployment_group_name
       }
     }
   }
