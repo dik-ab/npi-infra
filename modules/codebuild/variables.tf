@@ -12,3 +12,8 @@ variable "codebuild_service_role_arn" {
   description = "The ARN of the service role for CodeBuild"
   type        = string
 }
+
+variable "ecr_repository_url" {
+  description = "The url of the ECS Repository"
+  type        = string
+}

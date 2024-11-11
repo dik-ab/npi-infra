@@ -10,6 +10,12 @@ resource "aws_codebuild_project" "backend_build" {
     compute_type                = "BUILD_GENERAL1_SMALL"
     image                       = "aws/codebuild/standard:5.0"
     type                        = "LINUX_CONTAINER"
+    privileged_mode             = true
+    environment_variable {
+      name  = "REPOSITORY_URL"
+      value = var.ecr_repository_url
+      type  = "PLAINTEXT"
+    }
   }
 
   source {
