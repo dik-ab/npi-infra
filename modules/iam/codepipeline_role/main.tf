@@ -27,11 +27,21 @@ resource "aws_iam_role_policy" "codepipeline_policy" {
     {
       "Effect": "Allow",
       "Action": [
-        "s3:*",
-        "codebuild:*",
+        "s3:PutObject",
+        "s3:GetObject",
+        "s3:GetObjectVersion",
+        "s3:GetBucketVersioning",
+        "codebuild:BatchGetBuilds",
+        "codebuild:StartBuild",
         "codedeploy:*",
-        "cloudwatch:*",
-        "iam:PassRole"
+        "ecs:DescribeServices",
+        "ecs:DescribeTaskDefinition",
+        "ecs:DescribeTasks",
+        "ecs:ListTasks",
+        "ecs:RegisterTaskDefinition",
+        "ecs:UpdateService",
+        "iam:PassRole",
+        "codestar-connections:UseConnection"
       ],
       "Resource": "*"
     }

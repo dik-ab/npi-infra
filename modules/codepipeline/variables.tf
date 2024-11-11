@@ -48,3 +48,7 @@ variable "codedeploy_deployment_group_name" {
   description = "The Name of the CodeDeploy deployment group name"
   type        = string
 }
+
+variable "codestarconnections_github_connection_arn" {
+  type        = string
+}
