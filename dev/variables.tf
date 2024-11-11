@@ -54,3 +54,7 @@ variable "github_branch" {
 variable "github_owner" {
   type = string
 }
+
+variable "codestarconnections_github_connection_arn" {
+  type = string
+}
