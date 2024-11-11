@@ -44,6 +44,7 @@ module "ecs" {
   private_subnet_ids     = module.network.private_subnet_ids
   security_group_ids     = [module.security_group.ecs_sg_id]
   blue_target_group_arn  = module.alb.blue_target_group_arn
+  cloudwatch_log_group_name         = module.cloudwatch_logs.cloudwatch_log_group_name
 }
 
 module "aurora" {
@@ -144,4 +145,11 @@ module "codedeploy_role" {
   project_name         = var.project_name
   environment          = var.environment
   artifact_bucket_name = module.s3_artifact_bucket.artifact_bucket_name
+}
+
+module "cloudwatch_logs" {
+  source           = "../modules/cloudwatch_logs"
+  project_name     = var.project_name
+  environment      = var.environment
+  retention_in_days = var.retention_in_days
 }

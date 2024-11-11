@@ -28,7 +28,7 @@ resource "aws_ecs_task_definition" "django_task" {
     "logConfiguration": {
       "logDriver": "awslogs",
       "options": {
-        "awslogs-group": "/ecs/${var.project_name}-${var.environment}-django",
+        "awslogs-group": "${var.cloudwatch_log_group_name}",
         "awslogs-region": "ap-northeast-1",
         "awslogs-stream-prefix": "ecs"
       }

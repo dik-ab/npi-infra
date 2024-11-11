@@ -66,3 +66,7 @@ variable "docker_hub_username" {
 variable "docker_hub_token" {
   type = string
 }
+
+variable "retention_in_days" {
+  type  = number
+}
