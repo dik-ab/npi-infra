@@ -26,7 +26,6 @@ variable "github_repo" {
 variable "github_branch" {
   description = "Branch name for the source code"
   type        = string
-  default     = "main"
 }
 
 variable "role_arn" {

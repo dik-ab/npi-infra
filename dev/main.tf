@@ -90,6 +90,7 @@ module "codepipeline" {
   environment                               = var.environment
   github_repo                               = var.github_repo
   github_owner                              = var.github_owner
+  github_branch                             = var.github_branch
   codebuild_project_name                    = module.codebuild.codebuild_project_name
   codedeploy_app_name                       = module.codedeploy.codedeploy_app_name
   codedeploy_deployment_group_name          = module.codedeploy.codedeploy_deployment_group_name
