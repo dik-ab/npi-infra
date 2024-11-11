@@ -7,5 +7,5 @@ output "ecs_sg_id" {
 }
 
 output "aurora_sg_id" {
-  value       = aws_security_group.aurora_sg.id
+  value = aws_security_group.aurora_sg.id
 }

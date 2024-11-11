@@ -37,11 +37,13 @@ module "ecs" {
   source                 = "../modules/ecs"
   project_name           = var.project_name
   environment            = var.environment
+  task_role_arn          = module.iam.task_role_arn
+  execution_role_arn     = module.iam.execution_role_arn
   django_image           = module.ecr.ecr_repository_url
   django_settings_module = "${var.project_name}.settings.${var.environment}"
   private_subnet_ids     = module.network.private_subnet_ids
   security_group_ids     = [module.security_group.ecs_sg_id]
-  target_group_arn       = module.alb.target_group_arn
+  blue_target_group_arn  = module.alb.blue_target_group_arn
 }
 
 module "aurora" {
@@ -74,4 +76,66 @@ module "iam" {
   aurora_cluster_arn   = module.aurora.aurora_cluster_arn
   aurora_instance_arns = module.aurora.aurora_cluster_instance_arns
   secret_arn           = module.secrets.db_credentials_arn
+}
+
+module "s3_artifact_bucket" {
+  source       = "../modules/s3/artifact_bucket"
+  project_name = var.project_name
+  environment  = var.environment
+}
+
+module "codepipeline" {
+  source                                    = "../modules/codepipeline"
+  project_name                              = var.project_name
+  environment                               = var.environment
+  github_repo                               = var.github_repo
+  github_owner                              = var.github_owner
+  codebuild_project_name                    = module.codebuild.codebuild_project_name
+  codedeploy_app_name                       = module.codedeploy.codedeploy_app_name
+  codedeploy_deployment_group_name          = module.codedeploy.codedeploy_deployment_group_name
+  role_arn                                  = module.codepipeline_role.pipeline_role_arn
+  artifact_bucket_name                      = module.s3_artifact_bucket.artifact_bucket_name
+  codestarconnections_github_connection_arn = var.codestarconnections_github_connection_arn
+}
+
+module "codepipeline_role" {
+  source       = "../modules/iam/codepipeline_role"
+  project_name = var.project_name
+  environment  = var.environment
+}
+
+module "codebuild" {
+  source                     = "../modules/codebuild"
+  project_name               = var.project_name
+  environment                = var.environment
+  codebuild_service_role_arn = module.codebuild_role.codebuild_service_role_arn
+  ecr_repository_url         = module.ecr.ecr_repository_url
+}
+
+module "codebuild_role" {
+  source               = "../modules/iam/codebuild_role"
+  project_name         = var.project_name
+  environment          = var.environment
+  artifact_bucket_name = module.s3_artifact_bucket.artifact_bucket_name
+}
+
+module "codedeploy" {
+  source                      = "../modules/codedeploy"
+  project_name                = var.project_name
+  environment                 = var.environment
+  codedeploy_service_role_arn = module.codedeploy_role.codedeploy_service_role_arn
+  ecs_cluster_name            = module.ecs.cluster_name
+  ecs_service_name            = module.ecs.service_name
+  listener_arn                = module.alb.listener_arn
+  lb_http_listener_arn        = module.alb.listener_arn
+  lb_http_test_listener_arn   = module.alb.test_listener_arn
+  lb_blue_target_group_name   = module.alb.lb_blue_target_group_name
+  lb_green_target_group_name  = module.alb.lb_green_target_group_name
+}
+
+module "codedeploy_role" {
+  source               = "../modules/iam/codedeploy_role"
+  project_name         = var.project_name
+  environment          = var.environment
+  artifact_bucket_name = module.s3_artifact_bucket.artifact_bucket_name
 }

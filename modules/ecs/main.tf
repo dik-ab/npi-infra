@@ -2,35 +2,14 @@ resource "aws_ecs_cluster" "main" {
   name = "${var.project_name}-${var.environment}-ecs-cluster"
 }
 
-resource "aws_iam_role" "ecs_task_execution" {
-  name = "${var.project_name}-${var.environment}-ecs-task-execution-role"
-
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Action = "sts:AssumeRole"
-        Effect = "Allow"
-        Principal = {
-          Service = "ecs-tasks.amazonaws.com"
-        }
-      }
-    ]
-  })
-
-  managed_policy_arns = [
-    "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy",
-    "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess"
-  ]
-}
-
 resource "aws_ecs_task_definition" "django_task" {
   family                   = "${var.project_name}-${var.environment}-django-task"
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
   cpu                      = "512"
   memory                   = "1024"
-  execution_role_arn       = aws_iam_role.ecs_task_execution.arn
+  task_role_arn            = var.task_role_arn
+  execution_role_arn       = var.execution_role_arn
 
   container_definitions = <<DEFINITION
 [
@@ -66,15 +45,27 @@ resource "aws_ecs_service" "django_service" {
   launch_type     = "FARGATE"
   desired_count   = 1
 
+  deployment_controller {
+    type = "CODE_DEPLOY"
+  }
+
   network_configuration {
-    subnets         = var.private_subnet_ids
-    security_groups = var.security_group_ids
+    subnets          = var.private_subnet_ids
+    security_groups  = var.security_group_ids
     assign_public_ip = false
   }
 
   load_balancer {
-    target_group_arn = var.target_group_arn
+    target_group_arn = var.blue_target_group_arn
     container_name   = "npi-backend"
     container_port   = 8000
+  }
+
+  lifecycle {
+    ignore_changes = [
+      desired_count,
+      load_balancer,
+      task_definition
+    ]
   }
 }

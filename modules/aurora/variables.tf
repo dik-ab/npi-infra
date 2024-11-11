@@ -4,7 +4,7 @@ variable "ecs_security_group_id" {
 }
 
 variable "instance_count" {
-  type        = string
+  type = string
 }
 
 variable "db_username" {

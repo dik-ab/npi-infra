@@ -1,12 +1,12 @@
 resource "aws_rds_cluster" "aurora_cluster" {
-  cluster_identifier      = "${var.project_name}-${var.environment}-aurora-cluster"
-  engine                  = "aurora-postgresql"
-  engine_version          = 15.4
-  engine_mode             = "provisioned"
-  master_username         = var.db_username
-  master_password         = var.db_password
-  db_subnet_group_name    = var.db_subnet_group_name
-  vpc_security_group_ids  = [var.aurora_security_group_id]
+  cluster_identifier     = "${var.project_name}-${var.environment}-aurora-cluster"
+  engine                 = "aurora-postgresql"
+  engine_version         = 15.4
+  engine_mode            = "provisioned"
+  master_username        = var.db_username
+  master_password        = var.db_password
+  db_subnet_group_name   = var.db_subnet_group_name
+  vpc_security_group_ids = [var.aurora_security_group_id]
 
   serverlessv2_scaling_configuration {
     min_capacity = 2

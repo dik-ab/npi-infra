@@ -8,10 +8,10 @@ resource "aws_vpc" "main" {
 }
 
 resource "aws_vpc_endpoint" "ses" {
-  vpc_id            = aws_vpc.main.id
-  service_name      = "com.amazonaws.${var.aws_region}.email-smtp"
-  vpc_endpoint_type = "Interface"
-  subnet_ids        = aws_subnet.private[*].id
+  vpc_id             = aws_vpc.main.id
+  service_name       = "com.amazonaws.${var.aws_region}.email-smtp"
+  vpc_endpoint_type  = "Interface"
+  subnet_ids         = aws_subnet.private[*].id
   security_group_ids = [var.ecs_sg_id]
 
   tags = {
@@ -56,6 +56,23 @@ resource "aws_internet_gateway" "main" {
   }
 }
 
+resource "aws_eip" "nat" {
+
+  vpc = true
+
+  tags = {
+    Name = "${var.environment}-nat-eip"
+  }
+}
+
+resource "aws_nat_gateway" "main" {
+  allocation_id = aws_eip.nat.id
+  subnet_id     = aws_subnet.public[0].id
+  tags = {
+    Name = "${var.project_name}-${var.environment}-nat-gateway"
+  }
+}
+
 resource "aws_route_table" "public" {
   vpc_id = aws_vpc.main.id
   route {
@@ -72,6 +89,12 @@ resource "aws_route_table" "private" {
   tags = {
     Name = "${var.project_name}-${var.environment}-private-rt"
   }
+}
+
+resource "aws_route" "private_internet_access" {
+  route_table_id         = aws_route_table.private.id
+  destination_cidr_block = "0.0.0.0/0"
+  nat_gateway_id         = aws_nat_gateway.main.id
 }
 
 resource "aws_route_table_association" "public" {
