@@ -112,6 +112,8 @@ module "codebuild" {
   aws_region                 = var.aws_region
   codebuild_service_role_arn = module.codebuild_role.codebuild_service_role_arn
   ecr_repository_url         = module.ecr.ecr_repository_url
+  docker_hub_username        = var.docker_hub_username
+  docker_hub_token           = var.docker_hub_token
 }
 
 module "codebuild_role" {

@@ -21,6 +21,16 @@ resource "aws_codebuild_project" "backend_build" {
       value = var.aws_region
       type  = "PLAINTEXT"
     }
+    environment_variable {
+      name  = "DOCKER_HUB_USERNAME"
+      value = var.docker_hub_username
+      type  = "PLAINTEXT"
+    }
+    environment_variable {
+      name  = "DOCKER_HUB_TOKEN"
+      value = var.docker_hub_token
+      type  = "PLAINTEXT"
+    }
   }
 
   source {

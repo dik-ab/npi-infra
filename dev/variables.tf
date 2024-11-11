@@ -58,3 +58,11 @@ variable "github_owner" {
 variable "codestarconnections_github_connection_arn" {
   type = string
 }
+
+variable "docker_hub_username" {
+  type = string
+}
+
+variable "docker_hub_token" {
+  type = string
+}

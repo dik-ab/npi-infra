@@ -22,3 +22,13 @@ variable "ecr_repository_url" {
   description = "The url of the ECS Repository"
   type        = string
 }
+
+variable "docker_hub_username" {
+  description = "username of docker hub"
+  type        = string
+}
+
+variable "docker_hub_token" {
+  description = "access token of docker hub"
+  type        = string
+}
