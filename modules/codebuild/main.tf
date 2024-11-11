@@ -16,6 +16,11 @@ resource "aws_codebuild_project" "backend_build" {
       value = var.ecr_repository_url
       type  = "PLAINTEXT"
     }
+    environment_variable {
+      name  = "AWS_DEFAULT_REGION"
+      value = var.aws_region
+      type  = "PLAINTEXT"
+    }
   }
 
   source {

@@ -108,6 +108,7 @@ module "codebuild" {
   source                     = "../modules/codebuild"
   project_name               = var.project_name
   environment                = var.environment
+  aws_region                 = var.aws_region
   codebuild_service_role_arn = module.codebuild_role.codebuild_service_role_arn
   ecr_repository_url         = module.ecr.ecr_repository_url
 }

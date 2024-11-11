@@ -8,6 +8,11 @@ variable "environment" {
   type        = string
 }
 
+variable "aws_region" {
+  description = "aws region"
+  type        = string
+}
+
 variable "codebuild_service_role_arn" {
   description = "The ARN of the service role for CodeBuild"
   type        = string
