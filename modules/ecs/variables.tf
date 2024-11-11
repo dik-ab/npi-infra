@@ -18,8 +18,18 @@ variable "private_subnet_ids" {
   type        = list(string)
 }
 
-variable "target_group_arn" {
-  description = "ALB target group ARN for ECS service"
+variable "blue_target_group_arn" {
+  description = "ARN of the blue target group for Blue/Green deployments"
+  type        = string
+}
+
+variable "execution_role_arn" {
+  description = "ARN of the IAM role for ECS task execution"
+  type        = string
+}
+
+variable "task_role_arn" {
+  description = "ARN of the IAM role for ECS task role"
   type        = string
 }
 
