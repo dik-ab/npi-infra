@@ -23,12 +23,27 @@ variable "ecs_service_name" {
   type        = string
 }
 
-variable "primary_target_group_name" {
-  description = "The name of the primary target group for ECS service"
+variable "listener_arn" {
+  description = "The ARN of the ALB listener"
   type        = string
 }
 
-variable "listener_arn" {
-  description = "The ARN of the ALB listener"
+variable "lb_http_listener_arn" {
+  description = "The ARN of the load balancer's HTTP listener for production traffic"
+  type        = string
+}
+
+variable "lb_http_test_listener_arn" {
+  description = "The ARN of the load balancer's HTTP listener for test traffic"
+  type        = string
+}
+
+variable "lb_blue_target_group_name" {
+  description = "The name of the load balancer's blue target group"
+  type        = string
+}
+
+variable "lb_green_target_group_name" {
+  description = "The name of the load balancer's green target group"
   type        = string
 }
