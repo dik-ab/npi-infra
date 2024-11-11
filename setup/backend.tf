@@ -1,7 +1,7 @@
 resource "aws_s3_bucket" "terraform_state" {
   bucket = "${var.project_name}-state-bucket"
   acl    = "private"
-  
+
   versioning {
     enabled = true
   }
@@ -21,7 +21,7 @@ resource "aws_s3_bucket" "terraform_state" {
   }
 
   tags = {
-    Name        = "${var.project_name}-state-bucket"
+    Name = "${var.project_name}-state-bucket"
   }
 }
 
@@ -36,6 +36,6 @@ resource "aws_dynamodb_table" "terraform_lock" {
   }
 
   tags = {
-    Name        = "${var.project_name}-lock-table"
+    Name = "${var.project_name}-lock-table"
   }
 }

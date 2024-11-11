@@ -9,12 +9,12 @@ output "test_listener_arn" {
 }
 
 output "blue_target_group_arn" {
-  value = aws_lb_target_group.ecs_tg_blue.arn
+  value       = aws_lb_target_group.ecs_tg_blue.arn
   description = "ARN of the blue target group for Blue/Green deployments"
 }
 
 output "green_target_group_arn" {
-  value = aws_lb_target_group.ecs_tg_green.arn
+  value       = aws_lb_target_group.ecs_tg_green.arn
   description = "ARN of the green target group for Blue/Green deployments"
 }
 

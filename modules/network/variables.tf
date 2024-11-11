@@ -9,11 +9,11 @@ variable "environment" {
 }
 
 variable "ecs_sg_id" {
-  type        = string
+  type = string
 }
 
 variable "aws_region" {
-  type        = string
+  type = string
 }
 
 variable "vpc_cidr" {

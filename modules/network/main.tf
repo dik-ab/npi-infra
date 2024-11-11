@@ -8,10 +8,10 @@ resource "aws_vpc" "main" {
 }
 
 resource "aws_vpc_endpoint" "ses" {
-  vpc_id            = aws_vpc.main.id
-  service_name      = "com.amazonaws.${var.aws_region}.email-smtp"
-  vpc_endpoint_type = "Interface"
-  subnet_ids        = aws_subnet.private[*].id
+  vpc_id             = aws_vpc.main.id
+  service_name       = "com.amazonaws.${var.aws_region}.email-smtp"
+  vpc_endpoint_type  = "Interface"
+  subnet_ids         = aws_subnet.private[*].id
   security_group_ids = [var.ecs_sg_id]
 
   tags = {

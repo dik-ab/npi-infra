@@ -40,8 +40,8 @@ variable "codebuild_project_name" {
 }
 
 variable "codedeploy_app_name" {
-  description  = "The Name of the CodeDeploy application name"
-  type         = string
+  description = "The Name of the CodeDeploy application name"
+  type        = string
 }
 
 variable "codedeploy_deployment_group_name" {
@@ -50,5 +50,5 @@ variable "codedeploy_deployment_group_name" {
 }
 
 variable "codestarconnections_github_connection_arn" {
-  type        = string
+  type = string
 }

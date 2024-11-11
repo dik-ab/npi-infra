@@ -22,11 +22,11 @@ resource "aws_s3_bucket_policy" "pipeline_artifacts_policy" {
     Version = "2012-10-17",
     Statement = [
       {
-        Effect   = "Allow",
+        Effect = "Allow",
         Principal = {
           Service = "codepipeline.amazonaws.com"
         },
-        Action   = [
+        Action = [
           "s3:GetObject",
           "s3:PutObject",
           "s3:ListBucket"

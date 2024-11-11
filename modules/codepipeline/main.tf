@@ -18,9 +18,9 @@ resource "aws_codepipeline" "backend_pipeline" {
       version          = "1"
       output_artifacts = ["source_output"]
       configuration = {
-        ConnectionArn = var.codestarconnections_github_connection_arn
+        ConnectionArn    = var.codestarconnections_github_connection_arn
         FullRepositoryId = "${var.github_owner}/${var.github_repo}"
-        BranchName    = var.github_branch
+        BranchName       = var.github_branch
       }
     }
   }

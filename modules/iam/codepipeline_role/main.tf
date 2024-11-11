@@ -1,5 +1,5 @@
 resource "aws_iam_role" "codepipeline_role" {
-  name = "${var.project_name}-${var.environment}-codepipeline-role"
+  name               = "${var.project_name}-${var.environment}-codepipeline-role"
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",

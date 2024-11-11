@@ -1,6 +1,6 @@
 resource "aws_iam_role" "codedeploy_service_role" {
   name = "${var.project_name}-${var.environment}-codedeploy-role"
-  
+
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",

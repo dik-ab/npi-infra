@@ -85,16 +85,16 @@ module "s3_artifact_bucket" {
 }
 
 module "codepipeline" {
-  source                           = "../modules/codepipeline"
-  project_name                     = var.project_name
-  environment                      = var.environment
-  github_repo                      = var.github_repo
-  github_owner                     = var.github_owner
-  codebuild_project_name           = module.codebuild.codebuild_project_name
-  codedeploy_app_name              = module.codedeploy.codedeploy_app_name
-  codedeploy_deployment_group_name = module.codedeploy.codedeploy_deployment_group_name
-  role_arn                         = module.codepipeline_role.pipeline_role_arn
-  artifact_bucket_name             = module.s3_artifact_bucket.artifact_bucket_name
+  source                                    = "../modules/codepipeline"
+  project_name                              = var.project_name
+  environment                               = var.environment
+  github_repo                               = var.github_repo
+  github_owner                              = var.github_owner
+  codebuild_project_name                    = module.codebuild.codebuild_project_name
+  codedeploy_app_name                       = module.codedeploy.codedeploy_app_name
+  codedeploy_deployment_group_name          = module.codedeploy.codedeploy_deployment_group_name
+  role_arn                                  = module.codepipeline_role.pipeline_role_arn
+  artifact_bucket_name                      = module.s3_artifact_bucket.artifact_bucket_name
   codestarconnections_github_connection_arn = var.codestarconnections_github_connection_arn
 }
 
