@@ -32,3 +32,13 @@ variable "docker_hub_token" {
   description = "access token of docker hub"
   type        = string
 }
+
+variable "image_uri" {
+  description = "ECR Image URI to be used in CodeBuild"
+  type        = string
+}
+
+variable "execution_role_arn" {
+  description = "Execution Role ARN for ECS Task Definition"
+  type        = string
+}

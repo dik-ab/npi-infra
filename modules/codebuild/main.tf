@@ -31,6 +31,16 @@ resource "aws_codebuild_project" "backend_build" {
       value = var.docker_hub_token
       type  = "PLAINTEXT"
     }
+    environment_variable {
+      name  = "IMAGE_URI"
+      value = var.image_uri
+      type  = "PLAINTEXT"
+    }
+    environment_variable {
+      name  = "EXECUTION_ROLE_ARN"
+      value = var.execution_role_arn
+      type  = "PLAINTEXT"
+    }
   }
 
   source {
