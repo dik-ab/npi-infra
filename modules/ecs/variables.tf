@@ -42,3 +42,8 @@ variable "django_settings_module" {
   description = "Django settings module (e.g., app.settings.production)"
   type        = string
 }
+
+variable "cloudwatch_log_group_name" {
+  description = "Name of the CloudWatch Logs group"
+  type        = string
+}

@@ -47,3 +47,19 @@ variable "lb_green_target_group_name" {
   description = "The name of the load balancer's green target group"
   type        = string
 }
+
+variable "action_on_timeout" {
+  description = "The action to take on timeout for blue-green deployment"
+  type        = string
+  default     = "STOP_DEPLOYMENT"
+}
+
+variable "wait_time_in_minutes" {
+  description = "The time in minutes to wait for deployment readiness"
+  type        = number
+}
+
+variable "termination_wait_time_in_minutes" {
+  description = "The time in minutes to wait before terminating old instances after deployment success"
+  type        = number
+}

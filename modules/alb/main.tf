@@ -19,7 +19,7 @@ resource "aws_lb_target_group" "ecs_tg_blue" {
   target_type = "ip"
 
   health_check {
-    path                = "/health"
+    path                = "/"
     interval            = 30
     timeout             = 5
     healthy_threshold   = 2
@@ -40,7 +40,7 @@ resource "aws_lb_target_group" "ecs_tg_green" {
   target_type = "ip"
 
   health_check {
-    path                = "/health"
+    path                = "/"
     interval            = 30
     timeout             = 5
     healthy_threshold   = 2

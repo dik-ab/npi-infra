@@ -58,3 +58,27 @@ variable "github_owner" {
 variable "codestarconnections_github_connection_arn" {
   type = string
 }
+
+variable "docker_hub_username" {
+  type = string
+}
+
+variable "docker_hub_token" {
+  type = string
+}
+
+variable "retention_in_days" {
+  type  = number
+}
+
+variable "action_on_timeout" {
+  type  = string
+}
+
+variable "wait_time_in_minutes" {
+  type  = number
+}
+
+variable "termination_wait_time_in_minutes" {
+  type  = number
+}
