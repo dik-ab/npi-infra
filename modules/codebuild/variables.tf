@@ -47,3 +47,8 @@ variable "db_credentials_name" {
   description = "Name of the Secrets Manager secret for database credentials"
   type        = string
 }
+
+variable "django_settings_module" {
+  description = "Django settings module (e.g., app.settings.production)"
+  type        = string
+}

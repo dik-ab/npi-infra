@@ -118,6 +118,7 @@ module "codebuild" {
   execution_role_arn         = module.iam.execution_role_arn
   image_uri                  = module.ecr.ecr_repository_url
   db_credentials_name        = module.secrets.db_credentials_name
+  django_settings_module     = "${var.project_name}.settings.${var.environment}"
 }
 
 module "codebuild_role" {

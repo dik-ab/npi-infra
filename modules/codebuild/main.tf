@@ -46,6 +46,11 @@ resource "aws_codebuild_project" "backend_build" {
       value = var.db_credentials_name
       type  = "PLAINTEXT"
     }
+    environment_variable {
+      name  = "DJANGO_SETTINGS_MODULE"
+      value = var.django_settings_module
+      type  = "PLAINTEXT"
+    }
   }
 
   source {
