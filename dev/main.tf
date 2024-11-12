@@ -138,6 +138,9 @@ module "codedeploy" {
   lb_http_test_listener_arn   = module.alb.test_listener_arn
   lb_blue_target_group_name   = module.alb.lb_blue_target_group_name
   lb_green_target_group_name  = module.alb.lb_green_target_group_name
+  action_on_timeout           = var.action_on_timeout
+  wait_time_in_minutes        = var.wait_time_in_minutes
+  termination_wait_time_in_minutes = var.termination_wait_time_in_minutes
 }
 
 module "codedeploy_role" {

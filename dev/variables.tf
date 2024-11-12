@@ -70,3 +70,15 @@ variable "docker_hub_token" {
 variable "retention_in_days" {
   type  = number
 }
+
+variable "action_on_timeout" {
+  type  = string
+}
+
+variable "wait_time_in_minutes" {
+  type  = number
+}
+
+variable "termination_wait_time_in_minutes" {
+  type  = number
+}
