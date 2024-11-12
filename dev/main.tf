@@ -117,6 +117,7 @@ module "codebuild" {
   docker_hub_token           = var.docker_hub_token
   execution_role_arn         = module.iam.execution_role_arn
   image_uri                  = module.ecr.ecr_repository_url
+  db_credentials_name        = module.secrets.db_credentials_name
 }
 
 module "codebuild_role" {

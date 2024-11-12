@@ -41,6 +41,11 @@ resource "aws_codebuild_project" "backend_build" {
       value = var.execution_role_arn
       type  = "PLAINTEXT"
     }
+    environment_variable {
+      name  = "SECRET_ID"
+      value = var.db_credentials_name
+      type  = "PLAINTEXT"
+    }
   }
 
   source {

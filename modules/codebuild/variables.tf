@@ -42,3 +42,8 @@ variable "execution_role_arn" {
   description = "Execution Role ARN for ECS Task Definition"
   type        = string
 }
+
+variable "db_credentials_name" {
+  description = "Name of the Secrets Manager secret for database credentials"
+  type        = string
+}
