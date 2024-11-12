@@ -49,12 +49,14 @@ resource "aws_codepipeline" "backend_pipeline" {
       name            = "Deploy"
       category        = "Deploy"
       owner           = "AWS"
-      provider        = "CodeDeploy"
+      provider        = "CodeDeployToECS"
       input_artifacts = ["build_output"]
       version         = "1"
       configuration = {
         ApplicationName     = var.codedeploy_app_name
         DeploymentGroupName = var.codedeploy_deployment_group_name
+        TaskDefinitionTemplateArtifact = "build_output"
+        AppSpecTemplateArtifact        = "build_output"
       }
     }
   }
