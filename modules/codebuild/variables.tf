@@ -18,6 +18,11 @@ variable "codebuild_service_role_arn" {
   type        = string
 }
 
+variable "codebuild_db_role_arn" {
+  description = "The ARN of the service role for CodeBuild to migrate rds"
+  type        = string
+}
+
 variable "ecr_repository_url" {
   description = "The url of the ECS Repository"
   type        = string
@@ -50,5 +55,20 @@ variable "db_credentials_name" {
 
 variable "django_settings_module" {
   description = "Django settings module (e.g., app.settings.production)"
+  type        = string
+}
+
+variable "vpc_id" {
+  description = "VPC ID where the CodeBuild project will run"
+  type        = string
+}
+
+variable "private_subnet_ids" {
+  description = "Private subnet ids for CodeBuild to connect with RDS"
+  type        = list(string)
+}
+
+variable "codebuild_sg_id" {
+  description = "Security group ID for CodeBuild to access RDS"
   type        = string
 }

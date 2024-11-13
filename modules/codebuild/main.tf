@@ -41,6 +41,35 @@ resource "aws_codebuild_project" "backend_build" {
       value = var.execution_role_arn
       type  = "PLAINTEXT"
     }
+  }
+
+  source {
+    type      = "CODEPIPELINE"
+    buildspec = "buildspec.yml"
+  }
+
+  tags = {
+    Name = "${var.project_name}-${var.environment}-build"
+  }
+}
+
+resource "aws_codebuild_project" "db_migration" {
+  name          = "${var.project_name}-${var.environment}-db-migration"
+  service_role  = "${var.codebuild_db_role_arn}"
+
+  source {
+    type            = "CODEPIPELINE"
+    buildspec       = "buildspec-migration.yml"
+  }
+
+  artifacts {
+    type = "CODEPIPELINE"
+  }
+
+  environment {
+    compute_type                = "BUILD_GENERAL1_SMALL"
+    image                       = "aws/codebuild/standard:7.0"
+    type                        = "LINUX_CONTAINER"
     environment_variable {
       name  = "SECRET_ID"
       value = var.db_credentials_name
@@ -52,13 +81,9 @@ resource "aws_codebuild_project" "backend_build" {
       type  = "PLAINTEXT"
     }
   }
-
-  source {
-    type      = "CODEPIPELINE"
-    buildspec = "buildspec.yml"
-  }
-
-  tags = {
-    Name = "${var.project_name}-${var.environment}-build"
+  vpc_config {
+    vpc_id            = "${var.vpc_id}"
+    subnets           = "${var.private_subnet_ids}"
+    security_group_ids = ["${var.codebuild_sg_id}"]
   }
 }
