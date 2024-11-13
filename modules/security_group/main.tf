@@ -65,6 +65,14 @@ resource "aws_security_group" "aurora_sg" {
     security_groups = [aws_security_group.ecs_sg.id]
   }
 
+  ingress {
+    from_port       = 5432
+    to_port         = 5432
+    protocol        = "tcp"
+    security_groups = [aws_security_group.codebuild_sg.id]
+    description     = "Allow CodeBuild access to Aurora"
+  }
+
   egress {
     from_port   = 0
     to_port     = 0
@@ -74,5 +82,18 @@ resource "aws_security_group" "aurora_sg" {
 
   tags = {
     Name = "${var.project_name}-${var.environment}-aurora-sg"
+  }
+}
+
+resource "aws_security_group" "codebuild_sg" {
+  name        = "${var.project_name}-${var.environment}-codebuild-sg"
+  description = "Security group for CodeBuild to access RDS"
+  vpc_id      = "${var.vpc_id}"
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 }

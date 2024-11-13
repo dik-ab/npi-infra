@@ -43,6 +43,22 @@ resource "aws_codepipeline" "backend_pipeline" {
   }
 
   stage {
+    name = "Migration"
+
+    action {
+      name             = "Migration"
+      category         = "Build"
+      owner            = "AWS"
+      provider         = "CodeBuild"
+      input_artifacts  = ["source_output"]
+      version          = "1"
+      configuration = {
+        ProjectName = var.db_migration_project_name
+      }
+    }
+  }
+
+  stage {
     name = "Deploy"
 
     action {

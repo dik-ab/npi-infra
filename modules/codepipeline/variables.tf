@@ -38,6 +38,11 @@ variable "codebuild_project_name" {
   type        = string
 }
 
+variable "db_migration_project_name" {
+  description = "The name of the Migration CodeBuild project name"
+  type        = string
+}
+
 variable "codedeploy_app_name" {
   description = "The Name of the CodeDeploy application name"
   type        = string

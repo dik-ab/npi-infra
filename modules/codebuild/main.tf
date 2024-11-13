@@ -8,7 +8,7 @@ resource "aws_codebuild_project" "backend_build" {
 
   environment {
     compute_type    = "BUILD_GENERAL1_SMALL"
-    image           = "aws/codebuild/standard:5.0"
+    image           = "aws/codebuild/standard:7.0"
     type            = "LINUX_CONTAINER"
     privileged_mode = true
     environment_variable {
@@ -50,5 +50,40 @@ resource "aws_codebuild_project" "backend_build" {
 
   tags = {
     Name = "${var.project_name}-${var.environment}-build"
+  }
+}
+
+resource "aws_codebuild_project" "db_migration" {
+  name          = "${var.project_name}-${var.environment}-db-migration"
+  service_role  = "${var.codebuild_db_role_arn}"
+
+  source {
+    type            = "CODEPIPELINE"
+    buildspec       = "buildspec-migration.yml"
+  }
+
+  artifacts {
+    type = "CODEPIPELINE"
+  }
+
+  environment {
+    compute_type                = "BUILD_GENERAL1_SMALL"
+    image                       = "aws/codebuild/standard:7.0"
+    type                        = "LINUX_CONTAINER"
+    environment_variable {
+      name  = "SECRET_ID"
+      value = var.db_credentials_name
+      type  = "PLAINTEXT"
+    }
+    environment_variable {
+      name  = "DJANGO_SETTINGS_MODULE"
+      value = var.django_settings_module
+      type  = "PLAINTEXT"
+    }
+  }
+  vpc_config {
+    vpc_id            = "${var.vpc_id}"
+    subnets           = "${var.private_subnet_ids}"
+    security_group_ids = ["${var.codebuild_sg_id}"]
   }
 }
