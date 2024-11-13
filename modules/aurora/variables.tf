@@ -7,6 +7,10 @@ variable "instance_count" {
   type = string
 }
 
+variable "db_name" {
+  type       = string
+}
+
 variable "db_username" {
   type        = string
   description = "Master username for the Aurora cluster"
