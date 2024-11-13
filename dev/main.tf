@@ -51,6 +51,7 @@ module "aurora" {
   source                   = "../modules/aurora"
   project_name             = var.project_name
   environment              = var.environment
+  db_name                  = var.db_name
   db_username              = var.db_username
   db_password              = var.db_password
   db_subnet_group_name     = module.network.db_subnet_group_name
@@ -93,6 +94,7 @@ module "codepipeline" {
   github_owner                              = var.github_owner
   github_branch                             = var.github_branch
   codebuild_project_name                    = module.codebuild.codebuild_project_name
+  db_migration_project_name                 = module.codebuild.db_migration_project_name
   codedeploy_app_name                       = module.codedeploy.codedeploy_app_name
   codedeploy_deployment_group_name          = module.codedeploy.codedeploy_deployment_group_name
   role_arn                                  = module.codepipeline_role.pipeline_role_arn
@@ -112,6 +114,7 @@ module "codebuild" {
   environment                = var.environment
   aws_region                 = var.aws_region
   codebuild_service_role_arn = module.codebuild_role.codebuild_service_role_arn
+  codebuild_db_role_arn      = module.codebuild_role.codebuild_db_role_arn
   ecr_repository_url         = module.ecr.ecr_repository_url
   docker_hub_username        = var.docker_hub_username
   docker_hub_token           = var.docker_hub_token
@@ -119,6 +122,9 @@ module "codebuild" {
   image_uri                  = module.ecr.ecr_repository_url
   db_credentials_name        = module.secrets.db_credentials_name
   django_settings_module     = "${var.project_name}.settings.${var.environment}"
+  vpc_id                     = module.network.vpc_id
+  private_subnet_ids         = module.network.private_subnet_ids
+  codebuild_sg_id            = module.security_group.codebuild_sg_id
 }
 
 module "codebuild_role" {
