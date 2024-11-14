@@ -8,7 +8,7 @@ variable "instance_count" {
 }
 
 variable "db_name" {
-  type       = string
+  type = string
 }
 
 variable "db_username" {

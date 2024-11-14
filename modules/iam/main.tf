@@ -51,7 +51,8 @@ resource "aws_iam_policy" "ecr_access_policy" {
           "ecr:GetAuthorizationToken",
           "logs:CreateLogStream",
           "logs:PutLogEvents",
-          "logs:CreateLogGroup"
+          "logs:CreateLogGroup",
+          "secretsmanager:GetSecretValue"
         ],
         Resource = "*"
       }

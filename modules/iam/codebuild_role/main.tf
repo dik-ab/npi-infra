@@ -100,8 +100,8 @@ resource "aws_iam_policy" "codebuild_cloudwatch_logs_policy" {
 }
 
 resource "aws_iam_role_policy" "codebuild_s3_policy" {
-  name   = "${var.project_name}-${var.environment}-codebuild-s3-policy"
-  role   = aws_iam_role.codebuild_db_role.name
+  name = "${var.project_name}-${var.environment}-codebuild-s3-policy"
+  role = aws_iam_role.codebuild_db_role.name
   policy = jsonencode({
     Version = "2012-10-17",
     Statement = [

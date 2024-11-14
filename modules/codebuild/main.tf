@@ -54,12 +54,12 @@ resource "aws_codebuild_project" "backend_build" {
 }
 
 resource "aws_codebuild_project" "db_migration" {
-  name          = "${var.project_name}-${var.environment}-db-migration"
-  service_role  = "${var.codebuild_db_role_arn}"
+  name         = "${var.project_name}-${var.environment}-db-migration"
+  service_role = var.codebuild_db_role_arn
 
   source {
-    type            = "CODEPIPELINE"
-    buildspec       = "buildspec-migration.yml"
+    type      = "CODEPIPELINE"
+    buildspec = "buildspec-migration.yml"
   }
 
   artifacts {
@@ -67,9 +67,9 @@ resource "aws_codebuild_project" "db_migration" {
   }
 
   environment {
-    compute_type                = "BUILD_GENERAL1_SMALL"
-    image                       = "aws/codebuild/standard:7.0"
-    type                        = "LINUX_CONTAINER"
+    compute_type = "BUILD_GENERAL1_SMALL"
+    image        = "aws/codebuild/standard:7.0"
+    type         = "LINUX_CONTAINER"
     environment_variable {
       name  = "SECRET_ID"
       value = var.db_credentials_name
@@ -82,8 +82,8 @@ resource "aws_codebuild_project" "db_migration" {
     }
   }
   vpc_config {
-    vpc_id            = "${var.vpc_id}"
-    subnets           = "${var.private_subnet_ids}"
+    vpc_id             = var.vpc_id
+    subnets            = var.private_subnet_ids
     security_group_ids = ["${var.codebuild_sg_id}"]
   }
 }

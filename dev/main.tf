@@ -34,17 +34,18 @@ module "ecr" {
 }
 
 module "ecs" {
-  source                 = "../modules/ecs"
-  project_name           = var.project_name
-  environment            = var.environment
-  task_role_arn          = module.iam.task_role_arn
-  execution_role_arn     = module.iam.execution_role_arn
-  django_image           = module.ecr.ecr_repository_url
-  django_settings_module = "${var.project_name}.settings.${var.environment}"
-  private_subnet_ids     = module.network.private_subnet_ids
-  security_group_ids     = [module.security_group.ecs_sg_id]
-  blue_target_group_arn  = module.alb.blue_target_group_arn
-  cloudwatch_log_group_name         = module.cloudwatch_logs.cloudwatch_log_group_name
+  source                    = "../modules/ecs"
+  project_name              = var.project_name
+  environment               = var.environment
+  task_role_arn             = module.iam.task_role_arn
+  execution_role_arn        = module.iam.execution_role_arn
+  django_image              = module.ecr.ecr_repository_url
+  django_settings_module    = "${var.project_name}.settings.${var.environment}"
+  private_subnet_ids        = module.network.private_subnet_ids
+  security_group_ids        = [module.security_group.ecs_sg_id]
+  blue_target_group_arn     = module.alb.blue_target_group_arn
+  cloudwatch_log_group_name = module.cloudwatch_logs.cloudwatch_log_group_name
+  db_credentials_arn        = module.secrets.db_credentials_arn
 }
 
 module "aurora" {
@@ -135,19 +136,19 @@ module "codebuild_role" {
 }
 
 module "codedeploy" {
-  source                      = "../modules/codedeploy"
-  project_name                = var.project_name
-  environment                 = var.environment
-  codedeploy_service_role_arn = module.codedeploy_role.codedeploy_service_role_arn
-  ecs_cluster_name            = module.ecs.cluster_name
-  ecs_service_name            = module.ecs.service_name
-  listener_arn                = module.alb.listener_arn
-  lb_http_listener_arn        = module.alb.listener_arn
-  lb_http_test_listener_arn   = module.alb.test_listener_arn
-  lb_blue_target_group_name   = module.alb.lb_blue_target_group_name
-  lb_green_target_group_name  = module.alb.lb_green_target_group_name
-  action_on_timeout           = var.action_on_timeout
-  wait_time_in_minutes        = var.wait_time_in_minutes
+  source                           = "../modules/codedeploy"
+  project_name                     = var.project_name
+  environment                      = var.environment
+  codedeploy_service_role_arn      = module.codedeploy_role.codedeploy_service_role_arn
+  ecs_cluster_name                 = module.ecs.cluster_name
+  ecs_service_name                 = module.ecs.service_name
+  listener_arn                     = module.alb.listener_arn
+  lb_http_listener_arn             = module.alb.listener_arn
+  lb_http_test_listener_arn        = module.alb.test_listener_arn
+  lb_blue_target_group_name        = module.alb.lb_blue_target_group_name
+  lb_green_target_group_name       = module.alb.lb_green_target_group_name
+  action_on_timeout                = var.action_on_timeout
+  wait_time_in_minutes             = var.wait_time_in_minutes
   termination_wait_time_in_minutes = var.termination_wait_time_in_minutes
 }
 
@@ -159,8 +160,8 @@ module "codedeploy_role" {
 }
 
 module "cloudwatch_logs" {
-  source           = "../modules/cloudwatch_logs"
-  project_name     = var.project_name
-  environment      = var.environment
+  source            = "../modules/cloudwatch_logs"
+  project_name      = var.project_name
+  environment       = var.environment
   retention_in_days = var.retention_in_days
 }

@@ -47,3 +47,9 @@ variable "cloudwatch_log_group_name" {
   description = "Name of the CloudWatch Logs group"
   type        = string
 }
+
+variable "db_credentials_arn" {
+  description = "Arn of db credentials secrets"
+  type        = string
+}
+
