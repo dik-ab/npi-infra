@@ -59,9 +59,15 @@ resource "aws_lb_listener" "http" {
   protocol          = "HTTP"
 
   default_action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.ecs_tg_blue.arn
+    type = "fixed-response"
+
+    fixed_response {
+      content_type = "text/plain"
+      message_body = "これは「HTTP-test」です"
+      status_code  = "200"
+    }
   }
+
   tags = {
     Name = "${var.project_name}-${var.environment}-alb-listener"
   }

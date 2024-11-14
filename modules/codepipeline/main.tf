@@ -46,12 +46,12 @@ resource "aws_codepipeline" "backend_pipeline" {
     name = "Migration"
 
     action {
-      name             = "Migration"
-      category         = "Build"
-      owner            = "AWS"
-      provider         = "CodeBuild"
-      input_artifacts  = ["source_output"]
-      version          = "1"
+      name            = "Migration"
+      category        = "Build"
+      owner           = "AWS"
+      provider        = "CodeBuild"
+      input_artifacts = ["source_output"]
+      version         = "1"
       configuration = {
         ProjectName = var.db_migration_project_name
       }
@@ -69,8 +69,8 @@ resource "aws_codepipeline" "backend_pipeline" {
       input_artifacts = ["build_output"]
       version         = "1"
       configuration = {
-        ApplicationName     = var.codedeploy_app_name
-        DeploymentGroupName = var.codedeploy_deployment_group_name
+        ApplicationName                = var.codedeploy_app_name
+        DeploymentGroupName            = var.codedeploy_deployment_group_name
         TaskDefinitionTemplateArtifact = "build_output"
         AppSpecTemplateArtifact        = "build_output"
       }
