@@ -27,23 +27,23 @@ resource "aws_ecs_task_definition" "django_task" {
       secrets = [
         {
           name      = "DATABASE_NAME"
-          valueFrom = "${var.db_credentials_arn}:DB_NAME"
+          valueFrom = "${var.db_credentials_arn}:DB_NAME::"
         },
         {
           name      = "DATABASE_USER"
-          valueFrom = "${var.db_credentials_arn}:DB_USERNAME"
+          valueFrom = "${var.db_credentials_arn}:DB_USERNAME::"
         },
         {
           name      = "DATABASE_PASSWORD"
-          valueFrom = "${var.db_credentials_arn}:DB_PASSWORD"
+          valueFrom = "${var.db_credentials_arn}:DB_PASSWORD::"
         },
         {
           name      = "DATABASE_HOST"
-          valueFrom = "${var.db_credentials_arn}:DB_HOST"
+          valueFrom = "${var.db_credentials_arn}:DB_HOST::"
         },
         {
           name      = "DATABASE_PORT"
-          valueFrom = "${var.db_credentials_arn}:DB_PORT"
+          valueFrom = "${var.db_credentials_arn}:DB_PORT::"
         }
       ],
       logConfiguration = {
@@ -65,6 +65,7 @@ resource "aws_ecs_service" "django_service" {
   task_definition = aws_ecs_task_definition.django_task.arn
   launch_type     = "FARGATE"
   desired_count   = 1
+  force_new_deployment = true
 
   deployment_controller {
     type = "CODE_DEPLOY"
