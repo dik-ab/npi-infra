@@ -121,7 +121,7 @@ module "codebuild" {
   docker_hub_token           = var.docker_hub_token
   execution_role_arn         = module.iam.execution_role_arn
   image_uri                  = module.ecr.ecr_repository_url
-  db_credentials_name        = module.secrets.db_credentials_name
+  db_credentials_arn         = module.secrets.db_credentials_arn
   django_settings_module     = "${var.project_name}.settings.${var.environment}"
   vpc_id                     = module.network.vpc_id
   private_subnet_ids         = module.network.private_subnet_ids

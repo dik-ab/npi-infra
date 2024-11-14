@@ -41,6 +41,16 @@ resource "aws_codebuild_project" "backend_build" {
       value = var.execution_role_arn
       type  = "PLAINTEXT"
     }
+    environment_variable {
+      name  = "SECRET_ID"
+      value = var.db_credentials_arn
+      type  = "PLAINTEXT"
+    }
+    environment_variable {
+      name  = "DJANGO_SETTINGS_MODULE"
+      value = var.django_settings_module
+      type  = "PLAINTEXT"
+    }
   }
 
   source {
@@ -72,7 +82,7 @@ resource "aws_codebuild_project" "db_migration" {
     type         = "LINUX_CONTAINER"
     environment_variable {
       name  = "SECRET_ID"
-      value = var.db_credentials_name
+      value = var.db_credentials_arn
       type  = "PLAINTEXT"
     }
     environment_variable {

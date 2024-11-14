@@ -48,8 +48,8 @@ variable "execution_role_arn" {
   type        = string
 }
 
-variable "db_credentials_name" {
-  description = "Name of the Secrets Manager secret for database credentials"
+variable "db_credentials_arn" {
+  description = "Arn of the Secrets Manager secret for database credentials"
   type        = string
 }
 
