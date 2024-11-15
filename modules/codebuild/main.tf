@@ -42,6 +42,11 @@ resource "aws_codebuild_project" "backend_build" {
       type  = "PLAINTEXT"
     }
     environment_variable {
+      name  = "TASK_ROLE_ARN"
+      value = var.task_role_arn
+      type  = "PLAINTEXT"
+    }
+    environment_variable {
       name  = "SECRET_ID"
       value = var.db_credentials_arn
       type  = "PLAINTEXT"
@@ -49,6 +54,11 @@ resource "aws_codebuild_project" "backend_build" {
     environment_variable {
       name  = "DJANGO_SETTINGS_MODULE"
       value = var.django_settings_module
+      type  = "PLAINTEXT"
+    }
+    environment_variable {
+      name  = "SENDER_EMAIL"
+      value = var.sender_email
       type  = "PLAINTEXT"
     }
   }
