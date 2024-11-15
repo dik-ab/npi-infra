@@ -82,3 +82,7 @@ variable "wait_time_in_minutes" {
 variable "termination_wait_time_in_minutes" {
   type = number
 }
+
+variable "sender_email" {
+  type = string
+}

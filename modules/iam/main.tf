@@ -100,7 +100,8 @@ resource "aws_iam_policy" "ses_access_policy" {
         Effect = "Allow",
         Action = [
           "ses:SendEmail",
-          "ses:SendRawEmail"
+          "ses:SendRawEmail",
+          "ses:GetSendQuota"
         ],
         Resource = "*"
       }

@@ -48,6 +48,11 @@ variable "execution_role_arn" {
   type        = string
 }
 
+variable "task_role_arn" {
+  description = "Role ARN for ECS Task"
+  type        = string
+}
+
 variable "db_credentials_arn" {
   description = "Arn of the Secrets Manager secret for database credentials"
   type        = string
@@ -70,5 +75,10 @@ variable "private_subnet_ids" {
 
 variable "codebuild_sg_id" {
   description = "Security group ID for CodeBuild to access RDS"
+  type        = string
+}
+
+variable "sender_email" {
+  description = "The Sender Email to send email from ses"
   type        = string
 }

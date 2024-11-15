@@ -97,3 +97,35 @@ resource "aws_security_group" "codebuild_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+
+resource "aws_security_group" "ses_sg" {
+  name        = "${var.project_name}-${var.environment}-ses-sg"
+  vpc_id      = var.vpc_id
+
+  ingress {
+    description = "Allow ECS to access SES SMTP over TLS"
+    from_port   = 587
+    to_port     = 587
+    protocol    = "tcp"
+    security_groups = [aws_security_group.ecs_sg.id]
+  }
+
+  ingress {
+    description = "Allow ECS to access SES SMTP over SSL"
+    from_port   = 465
+    to_port     = 465
+    protocol    = "tcp"
+    security_groups = [aws_security_group.ecs_sg.id]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "${var.project_name}-${var.environment}-ses-sg"
+  }
+}

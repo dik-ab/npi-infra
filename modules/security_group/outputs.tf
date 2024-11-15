@@ -13,3 +13,7 @@ output "aurora_sg_id" {
 output "codebuild_sg_id" {
   value = aws_security_group.codebuild_sg.id
 }
+
+output "ses_sg_id" {
+  value = aws_security_group.ses_sg.id
+}
