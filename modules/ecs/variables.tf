@@ -8,6 +8,10 @@ variable "environment" {
   type        = string
 }
 
+variable "region" {
+  type        = string
+}
+
 variable "security_group_ids" {
   description = "List of security group IDs for ECS tasks"
   type        = list(string)
@@ -50,6 +54,11 @@ variable "cloudwatch_log_group_name" {
 
 variable "db_credentials_arn" {
   description = "Arn of db credentials secrets"
+  type        = string
+}
+
+variable "sender_email" {
+  description = "The Sender Email to send email from ses"
   type        = string
 }
 

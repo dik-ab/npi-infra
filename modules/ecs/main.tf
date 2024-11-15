@@ -21,8 +21,9 @@ resource "aws_ecs_task_definition" "django_task" {
           hostPort      = 8000
         }
       ],
+      //buildspecで動的にタスク定義生成されるから不要かも
       environment = [
-        { name = "DJANGO_SETTINGS_MODULE", value = var.django_settings_module }
+        { name = "DJANGO_SETTINGS_MODULE", value = var.django_settings_module },
       ],
       secrets = [
         {
