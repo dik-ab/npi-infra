@@ -12,6 +12,10 @@ variable "ecs_sg_id" {
   type = string
 }
 
+variable "ses_sg_id" {
+  type = string
+}
+
 variable "aws_region" {
   type = string
 }

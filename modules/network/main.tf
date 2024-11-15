@@ -12,7 +12,7 @@ resource "aws_vpc_endpoint" "ses" {
   service_name       = "com.amazonaws.${var.aws_region}.email-smtp"
   vpc_endpoint_type  = "Interface"
   subnet_ids         = aws_subnet.private[*].id
-  security_group_ids = [var.ecs_sg_id]
+  security_group_ids = [var.ses_sg_id]
 
   tags = {
     Name = "${var.project_name}-${var.environment}-ses-endpoint"
