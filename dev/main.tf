@@ -8,6 +8,7 @@ module "network" {
   private_subnets_cidrs = var.private_subnets_cidrs
   availability_zones    = var.availability_zones
   ecs_sg_id             = module.security_group.ecs_sg_id
+  ses_sg_id             = module.security_group.ses_sg_id
 }
 
 module "alb" {
@@ -46,6 +47,8 @@ module "ecs" {
   blue_target_group_arn     = module.alb.blue_target_group_arn
   cloudwatch_log_group_name = module.cloudwatch_logs.cloudwatch_log_group_name
   db_credentials_arn        = module.secrets.db_credentials_arn
+  region                    = var.aws_region
+  sender_email              = var.sender_email
 }
 
 module "aurora" {
@@ -120,12 +123,14 @@ module "codebuild" {
   docker_hub_username        = var.docker_hub_username
   docker_hub_token           = var.docker_hub_token
   execution_role_arn         = module.iam.execution_role_arn
+  task_role_arn              = module.iam.task_role_arn
   image_uri                  = module.ecr.ecr_repository_url
   db_credentials_arn         = module.secrets.db_credentials_arn
   django_settings_module     = "${var.project_name}.settings.${var.environment}"
   vpc_id                     = module.network.vpc_id
   private_subnet_ids         = module.network.private_subnet_ids
   codebuild_sg_id            = module.security_group.codebuild_sg_id
+  sender_email               = var.sender_email
 }
 
 module "codebuild_role" {
