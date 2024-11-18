@@ -90,6 +90,12 @@ module "s3_artifact_bucket" {
   environment  = var.environment
 }
 
+module "npi_hosting_bucket" {
+  source       = "../modules/s3/frontend_hosting_bucket"
+  project_name = var.project_name
+  environment  = var.environment
+}
+
 module "codepipeline" {
   source                                    = "../modules/codepipeline"
   project_name                              = var.project_name
