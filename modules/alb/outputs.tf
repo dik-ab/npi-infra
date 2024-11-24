@@ -27,3 +27,13 @@ output "lb_green_target_group_name" {
   description = "The name of the green target group"
   value       = aws_lb_target_group.ecs_tg_green.name
 }
+
+output "alb_dns_name" {
+  description = "The DNS name of the Application Load Balancer"
+  value       = aws_lb.ecs_lb.dns_name
+}
+
+output "alb_zone_id" {
+  description = "The Hosted Zone ID of the Application Load Balancer"
+  value       = aws_lb.ecs_lb.zone_id
+}
