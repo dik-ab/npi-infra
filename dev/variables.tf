@@ -86,3 +86,7 @@ variable "termination_wait_time_in_minutes" {
 variable "sender_email" {
   type = string
 }
+
+variable "domain_name" {
+  type = string
+}
