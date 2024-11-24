@@ -176,3 +176,13 @@ module "cloudwatch_logs" {
   environment       = var.environment
   retention_in_days = var.retention_in_days
 }
+
+module "route53" {
+  source      = "../modules/route53"
+  region      = var.aws_region
+  domain_name = var.domain_name
+  subdomain   = var.environment
+
+  alb_dns_name = module.alb.alb_dns_name
+  alb_zone_id  = module.alb.alb_zone_id
+}
